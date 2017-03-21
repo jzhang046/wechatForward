@@ -17,5 +17,5 @@ for friend in friendList:
 	#print('end')
 	if friend['Alias']=='luzhen94':
 		print(friend)
-
+        print(friend['DisplayName'])
 #itchat.run()
