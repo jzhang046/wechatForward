@@ -2,7 +2,7 @@ import itchat
 from itchat.content import *
 
 masterAlias='jyzhang__'
-master=''
+master='master'
 #Set the master account according to wechatID 
 
 itchat.auto_login(enableCmdQR=2, hotReload=True)
@@ -30,8 +30,18 @@ for friend in friendList:
 
 @itchat.msg_register([TEXT])
 def text_forward(msg):
-    if msg['FromUserName']!=master
-        itchat.send('%s: %s' % (friendDispName(friendUserName.index(msg['FromUserName'])), msg['Text']), master);
+    if msg['FromUserName']!=master:
+        forwardToMaster(msg, master)
+    else:
+        respondToMaster(msg, master)
+
+def forwardToMaster(msg, master):
+    itchat.send('%s: %s' % (friendDispName[friendUserName.index(msg['FromUserName'])], msg['Text']), master);
+    return
+
+def respondToMaster(msg, master):
+    itchat.send('From master %s: %s' % (friendDispName[friendUserName.index(msg['FromUserName'])], msg['Text']), master);
+    return
 
 itchat.run();
 
