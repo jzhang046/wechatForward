@@ -1,10 +1,15 @@
 import itchat
 from itchat.content import *
 import re
+import sys
 
 masterAlias='jyzhang__'
 master='master'
-#Set the master account according to wechatID 
+#Set the default master account according to wechatID 
+
+if len(sys.argv) > 1:
+    masterAlias=sys.argv[1]
+#Set to user specified master account. 
 
 itchat.auto_login(enableCmdQR=2, hotReload=True)
 #Login
