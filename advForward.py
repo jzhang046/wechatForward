@@ -1,5 +1,6 @@
 import itchat
 from itchat.content import *
+import re
 
 masterAlias='jyzhang__'
 master='master'
@@ -40,7 +41,13 @@ def forwardToMaster(msg, master):
     return
 
 def respondToMaster(msg, master):
-    itchat.send('From master %s: %s' % (friendDispName[friendUserName.index(msg['FromUserName'])], msg['Text']), master);
+#    itchat.send('From master %s: %s' % (friendDispName[friendUserName.index(msg['FromUserName'])], msg['Text']), master);
+    arg=re.compile('::::').split(msg['Text'])
+    if len(arg)==2:
+        itchat.send(arg[1], friendUserName[friendDispName.index(arg[0])])
+        itchat.send('Message sent. ', master)
+    else:
+        itchat.send('Input error!', master)
     return
 
 itchat.run();
