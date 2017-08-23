@@ -6,7 +6,7 @@ A python program to auto forward WeChat messages
 
 > Put wechatForward.sh under /etc/init.d/
 
->Remember to run  ``` 
+>Remember to run the command below if you are using raspbian
+``` 
 sudo update-rc.d wechatForward.sh defaults 
 ```
-on raspbian
