@@ -1,7 +1,16 @@
+#!/usr/bin/python
+
 import itchat
 from itchat.content import *
 import re
 import sys
+#from pprint import pprint
+
+#TODO: 
+#   Add logging function. 
+def loginMessage(): 
+    itchat.send('Login Successful', master)
+    print('Login Successful')
 
 masterAlias='jyzhang__'
 master='master'
@@ -11,8 +20,12 @@ if len(sys.argv) > 1:
     masterAlias=sys.argv[1]
 #Set to user specified master account. 
 
-itchat.auto_login(enableCmdQR=2, hotReload=True)
+itchat.auto_login(loginCallback=loginMessage, enableCmdQR=False, picDir='/dir_to_QR/QR.png', hotReload=True)
 #Login
+#Note that, this requires to manually change the setting in the itchat package. 
+#I don't know if itchat support this, 
+#but I just changed the package to just download the QR code 
+#without doing anything else. 
 
 friendUserName=[]
 friendDispName=[]
@@ -29,8 +42,10 @@ for friend in friendList:
         friendDispName.append(tmp_DispName)
     #Set displayed name. 
     #If there isn't a remark name, use nick name instead. 
-
-    if friend['Alias']==masterAlias:
+    
+    #pprint(friend)
+    #if friend['Alias']==masterAlias:
+    if friend['NickName'] == masterAlias:
         master=friend['UserName']
 #Fill and complete lists. Get username for master. 
 
@@ -42,7 +57,7 @@ def text_forward(msg):
         respondToMaster(msg, master)
 
 def forwardToMaster(msg, master):
-    itchat.send('%s: %s' % (friendDispName[friendUserName.index(msg['FromUserName'])], msg['Text']), master);
+    itchat.send('%s:: %s' % (friendDispName[friendUserName.index(msg['FromUserName'])], msg['Text']), master);
     return
 
 def respondToMaster(msg, master):
